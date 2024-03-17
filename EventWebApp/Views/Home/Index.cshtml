@@ -1,8 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<EventAppLibrary.Models.Event>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Events</h1>
+
+@foreach (var item in Model)
+{
+    <div>
+        <a href="@Url.Action("Index", "Participants", new { eventId = item.Id })">@item.Name</a>
+
+        <p>@item.DateAndTime.ToString("g")</p>
+        <p>@item.EventPlace</p>
+        <p>Participants: @item.RegisteredPersons.Count + @item.RegisteredCompanies.Count</p>
+        @if (item.DateAndTime > DateTime.Now)
+        {
+            <form asp-action="DeleteEvent" method="post">
+                <input type="hidden" name="eventId" value="@item.Id" />
+                <button type="submit">Delete Event</button>
+            </form>
+            <a href="@Url.Action("AddParticipant", "Participants", new { eventId = item.Id })" class="btn btn-primary">Add Participant</a>
+        }
+    </div>
+}
+<a href="@Url.Action("Index", "Event")">Add an Event</a>

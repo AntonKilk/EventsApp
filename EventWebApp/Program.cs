@@ -1,4 +1,6 @@
 using EventAppLibrary.DataAccess;
+using EventAppLibrary.Services;
+using EventsLibrary.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,9 @@ builder.Services.AddDbContext<EventContext>(options => options.UseSqlServer(conn
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 var app = builder.Build();
 

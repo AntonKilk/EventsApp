@@ -56,8 +56,23 @@ namespace EventAppLibrary.DataAccess
                     {
                         new Company { Name = "Future Tech Ltd.", CompanyRegistrationCode = "876543219", NumberOfParticipants = 3, PaymentMethod = PaymentMethod.BankTransfer }
                     }
-                }
-              };
+                },
+                new() {
+                    Name = "Old Conference",
+                    DateAndTime = new DateTime(2023, 12, 15, 11, 0, 0),
+                    EventPlace = "Conference Center",
+                    AdditionalInformation = "A tech conference for old software developers.",
+                    RegisteredPersons =
+                    [
+                        new() { FirstName = "John", LastName = "Doe", PersonalCode = "1234567890", PaymentMethod = PaymentMethod.BankTransfer },
+                        new() { FirstName = "Jane", LastName = "Smith", PersonalCode = "0987654321", PaymentMethod = PaymentMethod.Cash }
+                    ],
+                    RegisteredCompanies =
+                    [
+                        new() { Name = "Tech Innovations Ltd.", CompanyRegistrationCode = "987654321", NumberOfParticipants = 5, PaymentMethod = PaymentMethod.BankTransfer }
+                    ]
+                },
+            };
 
             context.Events.AddRange(events);
             context.SaveChanges();
