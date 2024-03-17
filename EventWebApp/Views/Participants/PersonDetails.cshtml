@@ -1,0 +1,42 @@
+﻿@model EventAppLibrary.Models.Person
+
+@{
+    ViewData["Title"] = "Participant Details";
+}
+
+<h2>Participant Details</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="isCompany" value="false" />
+
+    <div>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+    </div>
+    <div>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+    </div>
+    <div>
+        <span asp-validation-for="PersonalCode" class="text-danger"></span>
+        <label asp-for="PersonalCode"></label>
+        <input asp-for="PersonalCode" class="form-control" value="@Model.PersonalCode" />
+    <div>
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            <label asp-for="PaymentMethod"></label>
+            <select asp-for="PaymentMethod" class="form-control" value="@Model.PaymentMethod">
+            <option value="BankTransfer">Bank Transfer</option>
+            <option value="Cash">Cash</option>
+        </select>
+    </div>
+    <div>
+            <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
+            <label asp-for="AdditionalInformation"></label>
+            <textarea asp-for="AdditionalInformation" class="form-control" maxlength="1500" value="@Model.AdditionalInformation">@Model.AdditionalInformation</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>

@@ -13,10 +13,14 @@ namespace EventAppLibrary.Services
             _context = context;
         }
 
-        public async Task CreatePersonAsync(Person person)
+        public async Task<Person> GetPersonAsync(int personId)
         {
-            _context.Persons.Add(person);
-            await _context.SaveChangesAsync();
+            var person = await _context.Persons.FindAsync(personId);
+            if (person == null)
+            {
+                throw new ArgumentException("Person not found.");
+            }
+            return person;
         }
 
         public async Task UpdatePersonAsync(Person updatedPerson)
@@ -29,16 +33,6 @@ namespace EventAppLibrary.Services
 
             _context.Entry(person).CurrentValues.SetValues(updatedPerson);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task DeletePersonAsync(int personId)
-        {
-            var person = await _context.Persons.FindAsync(personId);
-            if (person != null)
-            {
-                _context.Persons.Remove(person);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

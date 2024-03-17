@@ -13,12 +13,16 @@ namespace EventAppLibrary.Services
             _context = context;
         }
 
-        public async Task CreateCompanyAsync(Company company)
-        {
-            _context.Companies.Add(company);
-            await _context.SaveChangesAsync();
-        }
 
+        public async Task<Company> GetCompanyAsync(int companyId)
+        {
+            var company = await _context.Companies.FindAsync(companyId);
+            if (company == null)
+            {
+                throw new ArgumentException("Company not found.");
+            }
+            return company;
+        }
         public async Task UpdateCompanyAsync(Company updatedCompany)
         {
             var company = await _context.Companies.FindAsync(updatedCompany.Id);
@@ -31,14 +35,6 @@ namespace EventAppLibrary.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCompanyAsync(int companyId)
-        {
-            var company = await _context.Companies.FindAsync(companyId);
-            if (company != null)
-            {
-                _context.Companies.Remove(company);
-                await _context.SaveChangesAsync();
-            }
-        }
+
     }
 }

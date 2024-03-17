@@ -1,0 +1,43 @@
+﻿@model EventAppLibrary.Models.Company
+
+@{
+    ViewData["Title"] = "Company Details";
+}
+
+<h2>Company Details</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="isCompany" value="true" />
+
+    <div>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div>
+        <span asp-validation-for="CompanyRegistrationCode" class="text-danger"></span>
+        <label asp-for="CompanyRegistrationCode"></label>
+        <input asp-for="CompanyRegistrationCode" class="form-control" />
+    </div>
+    <div>
+        <span asp-validation-for="NumberOfParticipants" class="text-danger"></span>
+        <label asp-for="NumberOfParticipants"></label>
+        <input asp-for="NumberOfParticipants" class="form-control" />
+    </div>
+    <div>
+        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        <label asp-for="PaymentMethod"></label>
+        <select asp-for="PaymentMethod" class="form-control">
+            <option value="BankTransfer">Bank Transfer</option>
+            <option value="Cash">Cash</option>
+        </select>
+    </div>
+    <div>
+        <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
+        <label asp-for="AdditionalInformation"></label>
+        <textarea asp-for="AdditionalInformation" class="form-control" maxlength="5000"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>

@@ -12,6 +12,7 @@
             <th>Name</th>
             <th>Identification Number</th>
             <th>Action</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,9 @@
             <tr>
                 <td>@person.FirstName @person.LastName</td>
                 <td>@person.PersonalCode</td>
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("PersonDetails", "Participants", new { id = person.Id })">Details</a>
+                </td>
                 <td>
                     <form asp-action="DeleteParticipant" method="post">
                         <input type="hidden" name="eventId" value="@Model.Id" />
@@ -35,6 +39,9 @@
             <tr>
                 <td>@company.Name</td>
                 <td>@company.CompanyRegistrationCode</td>
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("CompanyDetails", "Participants", new { id = company.Id })">Details</a>
+                </td>
                 <td>
                     <form asp-action="DeleteParticipant" method="post">
                         <input type="hidden" name="eventId" value="@Model.Id" />

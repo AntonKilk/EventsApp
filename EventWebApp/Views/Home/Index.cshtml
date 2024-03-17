@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventAppLibrary.Models.Event>
+﻿@* @model IEnumerable<EventAppLibrary.Models.Event>
 
 <h1>Events</h1>
 
@@ -21,3 +21,87 @@
     </div>
 }
 <a href="@Url.Action("Index", "Event")">Add an Event</a>
+ *@
+
+ @model IEnumerable<EventAppLibrary.Models.Event>
+
+<h1>Events</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Current Events</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date and Time</th>
+                    <th>Place</th>
+                    <th>Participants</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(e => e.DateAndTime >= DateTime.Now))
+                {
+                    <tr>
+                        <td><a href="@Url.Action("Index", "Participants", new { eventId = item.Id })">@item.Name</a></td>
+                        <td>@item.DateAndTime.ToString("g")</td>
+                        <td>@item.EventPlace</td>
+                        <td>
+                            @{
+                                var totalParticipants = item.RegisteredPersons.Count;
+                                foreach (var company in item.RegisteredCompanies)
+                                {
+                                    totalParticipants += company.NumberOfParticipants;
+                                }
+                            }
+                            @totalParticipants
+                        </td>
+                        <td>
+                            <a href="@Url.Action("AddParticipant", "Participants", new { eventId = item.Id })" class="btn btn-primary">Add Participant</a>
+                            <form asp-action="DeleteEvent" method="post" style="display:inline;">
+                                <input type="hidden" name="eventId" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger">Delete Event</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h2>Past Events</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date and Time</th>
+                    <th>Place</th>
+                    <th>Participants</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(e => e.DateAndTime < DateTime.Now))
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.DateAndTime.ToString("g")</td>
+                        <td>@item.EventPlace</td>
+                        <td>
+                            @{
+                                var totalParticipants = item.RegisteredPersons.Count;
+                                foreach (var company in item.RegisteredCompanies)
+                                {
+                                    totalParticipants += company.NumberOfParticipants;
+                                }
+                            }
+                            @totalParticipants
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a href="@Url.Action("AddEvent", "Event")" class="btn btn-success">Add an Event</a>
