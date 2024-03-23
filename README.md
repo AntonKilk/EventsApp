@@ -70,9 +70,9 @@ The app is served at `https://localhost:44354/`
 
 Add UI/ CSS styles
 
-controllers logic tests & error handling
+~~controllers logic tests & error handling~~
 
-UI tests
+
 
 Add dictionary Json for translation
 
