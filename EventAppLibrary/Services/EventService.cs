@@ -17,6 +17,11 @@ namespace EventAppLibrary.Services
 
         public async Task<List<Event>> GetAllEventsAsync()
         {
+            //handle service error
+            if (_context == null)
+            {
+                throw new InvalidOperationException("Database context is null");
+            }
             return await _context.Events
                 .Include(e => e.RegisteredPersons)
                 .Include(e => e.RegisteredCompanies)

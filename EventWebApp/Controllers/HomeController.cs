@@ -17,20 +17,30 @@ namespace EventWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _eventService.GetAllEventsAsync();
-            return View(events);
+            try
+            {
+                var events = await _eventService.GetAllEventsAsync();
+                return View(events);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all events.");
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteEvent(int eventId)
         {
-            await _eventService.DeleteEventAsync(eventId);
+            try
+            {
+                await _eventService.DeleteEventAsync(eventId);
+            }
+            catch (KeyNotFoundException)
+            {
+                return RedirectToAction(nameof(Error));
+            }
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

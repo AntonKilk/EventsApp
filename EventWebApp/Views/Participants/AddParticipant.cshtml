@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Add Participant</button>
+    <button id="addParticipantBtn" type="submit" class="btn btn-primary">Add Participant</button>
 </form>
 
 <script>
@@ -78,5 +78,25 @@
         var showPerson = this.value === 'Person';
         document.getElementById('personFields').style.display = showPerson ? '' : 'none';
         document.getElementById('companyFields').style.display = showPerson ? 'none' : '';
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var participantTypeSelect = document.getElementById('participantType');
+        var addParticipantBtn = document.getElementById('addParticipantBtn');
+
+        addParticipantBtn.disabled = true;
+
+        participantTypeSelect.addEventListener('change', function () {
+            // Check if the selected value is either "Person" or "Company"
+            if (this.value === 'Person' || this.value === 'Company') {
+                // If yes, enable the button
+                addParticipantBtn.disabled = false;
+            } else {
+                // If no valid option is selected, disable the button
+                addParticipantBtn.disabled = true;
+            }
+        });
     });
 </script>
