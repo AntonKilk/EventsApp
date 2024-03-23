@@ -21,7 +21,7 @@ namespace EventWebApp.Tests
         public async Task AddEvent_ValidModelFutureDate_RedirectsToHomeIndex()
         {
             // Arrange
-            var mockEvent = new Event { DateAndTime = DateTime.Now.AddDays(1), Name = "Tech Conference", EventPlace = "Conference Center" }; // Future date
+            var mockEvent = new Event { DateAndTime = DateTime.Now.AddDays(1), Name = "Tech Conference", EventPlace = "Conference Center" };
             _controller.ModelState.Clear();
 
             // Act
