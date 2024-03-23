@@ -1,17 +1,17 @@
 ﻿@model EventAppLibrary.Models.Event
 
 @{
-    ViewData["Title"] = "Event Participants";
+    ViewData["Title"] = "Osavõtjad";
 }
 
-<h1>Participants for @Model.Name</h1>
+<h1>@ViewData["Title"]</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Identification Number</th>
-            <th>Action</th>
+            <th>Ürituse või isiku nimi</th>
+            <th>Isikukood/registrikood</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -22,14 +22,14 @@
                 <td>@person.FirstName @person.LastName</td>
                 <td>@person.PersonalCode</td>
                 <td>
-                    <a class="btn btn-primary" href="@Url.Action("PersonDetails", "Participants", new { id = person.Id })">Details</a>
+                    <a class="btn btn-primary" href="@Url.Action("PersonDetails", "Participants", new { id = person.Id })">VAATA</a>
                 </td>
                 <td>
                     <form asp-action="DeleteParticipant" method="post">
                         <input type="hidden" name="eventId" value="@Model.Id" />
                         <input type="hidden" name="participantId" value="@person.Id" />
                         <input type="hidden" name="isCompany" value="false" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">KUSTUTA</button>
                     </form>
                 </td>
             </tr>
@@ -40,14 +40,14 @@
                 <td>@company.Name</td>
                 <td>@company.CompanyRegistrationCode</td>
                 <td>
-                    <a class="btn btn-primary" href="@Url.Action("CompanyDetails", "Participants", new { id = company.Id })">Details</a>
+                    <a class="btn btn-primary" href="@Url.Action("CompanyDetails", "Participants", new { id = company.Id })">VAATA</a>
                 </td>
                 <td>
                     <form asp-action="DeleteParticipant" method="post">
                         <input type="hidden" name="eventId" value="@Model.Id" />
                         <input type="hidden" name="participantId" value="@company.Id" />
                         <input type="hidden" name="isCompany" value="true" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">KUSTUTA</button>
                     </form>
                 </td>
             </tr>
@@ -55,4 +55,4 @@
     </tbody>
 </table>
 
-<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>
+<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Tagasi</a>

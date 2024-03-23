@@ -1,7 +1,7 @@
 ﻿@model EventAppLibrary.Models.Event
 
 @{
-    ViewData["Title"] = "Add Event";
+    ViewData["Title"] = "Ürituse lisamine";
     DateTime twoYearsFromNow = DateTime.Now.AddYears(2);
     string maxDate = twoYearsFromNow.ToString("yyyy-MM-ddTHH:mm");
 }
@@ -11,22 +11,22 @@
 
 <form asp-action="AddEvent" asp-controller="Event" method="post">
     <div class="form-group">
-        <label for="name">Event Name</label>
+        <label for="name">Ürituse nimi</label>
         <input type="text" class="form-control" id="name" name="Name" required />
     </div>
     <div class="form-group">
-        <label for="dateAndTime">Date and Time</label>
+        <label for="dateAndTime">Toimumisaeg</label>
         <input type="datetime-local" class="form-control" id="dateAndTime" name="DateAndTime" required min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" max="@maxDate" />
     </div>
     <div class="form-group">
-        <label for="eventPlace">Venue</label>
+        <label for="eventPlace">Koht</label>
         <input type="text" class="form-control" id="eventPlace" name="EventPlace" required />
     </div>
     <div class="form-group">
-        <label for="additionalInformation">Additional Information</label>
+        <label for="additionalInformation">Lisainfo</label>
         <textarea class="form-control" id="additionalInformation" name="AdditionalInformation" maxlength="1000"></textarea>
     </div>
-    <button id="submitButton" type="submit" class="btn btn-primary">Add Event</button>
-    <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back</a>
+    <button id="submitButton" type="submit" class="btn btn-primary">Salvesta</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Tagasi</a>
 </form>
 

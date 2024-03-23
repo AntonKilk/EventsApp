@@ -2,6 +2,11 @@ html {
   font-size: 14px;
 }
 
+.navbar {
+    background-color: #004a99;
+    color: #fff;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -20,3 +25,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .table {
+        width: 50%;
+        margin-left: auto; 
+        margin-right: auto; 
+    }
+}
+

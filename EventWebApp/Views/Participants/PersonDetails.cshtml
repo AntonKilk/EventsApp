@@ -4,7 +4,7 @@
     ViewData["Title"] = "Participant Details";
 }
 
-<h2>Participant Details</h2>
+<h2>Osavõtja andmed</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" name="id" value="@Model.Id" />
@@ -12,34 +12,34 @@
 
     <div>
         <span asp-validation-for="FirstName" class="text-danger"></span>
-        <label asp-for="FirstName"></label>
+        <label asp-for="FirstName">Eesnimi</label>
         <input asp-for="FirstName" id="firstName" class="form-control" value="@Model.FirstName" />
     </div>
     <div>
         <span asp-validation-for="LastName" class="text-danger"></span>
-        <label asp-for="LastName"></label>
+        <label asp-for="LastName">Perekonnanimi</label>
         <input asp-for="LastName" id="lastName" class="form-control" value="@Model.LastName" />
     </div>
     <div>
         <span asp-validation-for="PersonalCode" class="text-danger"></span>
-        <label asp-for="PersonalCode"></label>
+        <label asp-for="PersonalCode">Isikukood</label>
         <input asp-for="PersonalCode" id="personalCodeInput" class="form-control" value="@Model.PersonalCode" />
     <div>
             <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-            <label asp-for="PaymentMethod"></label>
+            <label asp-for="PaymentMethod">Osavõtumaksu maksmise viis</label>
             <select asp-for="PaymentMethod" id="paymentMethod" class="form-control" value="@Model.PaymentMethod">
-            <option value="BankTransfer">Bank Transfer</option>
-            <option value="Cash">Cash</option>
+                <option value="BankTransfer">Pangaülekanne</option>
+                <option value="Cash">Sularaha</option>
         </select>
     </div>
     <div>
             <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
-            <label asp-for="AdditionalInformation"></label>
+            <label asp-for="AdditionalInformation">Lisainfo</label>
             <textarea asp-for="AdditionalInformation" class="form-control" maxlength="1500" value="@Model.AdditionalInformation">@Model.AdditionalInformation</textarea>
     </div>
-    <button id="saveChanges" type="submit" class="btn btn-primary">Save Changes</button>
+    <button id="saveChanges" type="submit" class="btn btn-primary">Salvesta</button>
 </form>
-<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>
+<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Tagasi</a>
 
 <!-- Fields validation -->
 <script>

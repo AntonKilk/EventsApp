@@ -1,49 +1,24 @@
-﻿@* @model IEnumerable<EventAppLibrary.Models.Event>
+﻿ @model IEnumerable<EventAppLibrary.Models.Event>
 
-<h1>Events</h1>
 
-@foreach (var item in Model)
-{
-    <div>
-        <a href="@Url.Action("Index", "Participants", new { eventId = item.Id })">@item.Name</a>
-
-        <p>@item.DateAndTime.ToString("g")</p>
-        <p>@item.EventPlace</p>
-        <p>Participants: @item.RegisteredPersons.Count + @item.RegisteredCompanies.Count</p>
-        @if (item.DateAndTime > DateTime.Now)
-        {
-            <form asp-action="DeleteEvent" method="post">
-                <input type="hidden" name="eventId" value="@item.Id" />
-                <button type="submit">Delete Event</button>
-            </form>
-            <a href="@Url.Action("AddParticipant", "Participants", new { eventId = item.Id })" class="btn btn-primary">Add Participant</a>
-        }
-    </div>
-}
-<a href="@Url.Action("Index", "Event")">Add an Event</a>
- *@
-
- @model IEnumerable<EventAppLibrary.Models.Event>
-
-<h1>Events</h1>
 
 <div class="row">
-    <div class="col-md-6">
-        <h2>Current Events</h2>
+    <div class="col-lg-6">
+        <h2>Tulevased üritused</h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Date and Time</th>
-                    <th>Place</th>
-                    <th>Participants</th>
-                    <th>Actions</th>
+                    
                 </tr>
             </thead>
+            @{
+                int index = 1;
+            }
             <tbody>
                 @foreach (var item in Model.Where(e => e.DateAndTime >= DateTime.Now))
                 {
                     <tr>
+                        <td>@index</td>
                         <td><a href="@Url.Action("Index", "Participants", new { eventId = item.Id })">@item.Name</a></td>
                         <td>@item.DateAndTime.ToString("g")</td>
                         <td>@item.EventPlace</td>
@@ -58,32 +33,38 @@
                             @totalParticipants
                         </td>
                         <td>
-                            <a href="@Url.Action("AddParticipant", "Participants", new { eventId = item.Id })" class="btn btn-primary">Add Participant</a>
-                            <form asp-action="DeleteEvent" method="post" style="display:inline;">
+                            <a href="@Url.Action("AddParticipant", "Participants", new { eventId = item.Id })" class="btn btn-primary">Lisa osavõtja</a>
+                        </td>
+                        <td>
+                           <form asp-action="DeleteEvent" method="post" style="display:inline;">
                                 <input type="hidden" name="eventId" value="@item.Id" />
-                                <button type="submit" class="btn btn-danger">Delete Event</button>
+                                <button type="submit" class="btn btn-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
+                                </button>
                             </form>
                         </td>
                     </tr>
+                    index++;
                 }
             </tbody>
         </table>
     </div>
-    <div class="col-md-6">
-        <h2>Past Events</h2>
+    <div class="col-lg-6">
+        <h2>Toimunud üritused</h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Date and Time</th>
-                    <th>Place</th>
-                    <th>Participants</th>
+                  
                 </tr>
             </thead>
+            @{
+                index = 1;
+            }
             <tbody>
                 @foreach (var item in Model.Where(e => e.DateAndTime < DateTime.Now))
                 {
                     <tr>
+                        <td>@index</td>
                         <td>@item.Name</td>
                         <td>@item.DateAndTime.ToString("g")</td>
                         <td>@item.EventPlace</td>
@@ -98,10 +79,11 @@
                             @totalParticipants
                         </td>
                     </tr>
+                    index++;
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<a href="@Url.Action("Index", "Event")" class="btn btn-success">Add an Event</a>
+<a href="@Url.Action("Index", "Event")" class="btn btn-success">LISA ÜRITUS</a>

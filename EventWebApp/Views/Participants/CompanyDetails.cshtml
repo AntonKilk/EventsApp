@@ -4,7 +4,7 @@
     ViewData["Title"] = "Company Details";
 }
 
-<h2>Company Details</h2>
+<h2>Ürituse andmed</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" name="id" value="@Model.Id" />
@@ -12,35 +12,36 @@
 
     <div>
         <span asp-validation-for="Name" class="text-danger"></span>
-        <label asp-for="Name"></label>
+        <label asp-for="Name">Ettevõtte juriidiline nimi</label>
         <input asp-for="Name" id="companyName" class="form-control" />
     </div>
     <div>
         <span asp-validation-for="CompanyRegistrationCode" class="text-danger"></span>
-        <label asp-for="CompanyRegistrationCode"></label>
+        <label asp-for="CompanyRegistrationCode">Ettevõtte registrikood</label>
         <input asp-for="CompanyRegistrationCode" id="companyRegistrationCode" class="form-control" />
     </div>
     <div>
         <span asp-validation-for="NumberOfParticipants" class="text-danger"></span>
-        <label asp-for="NumberOfParticipants"></label>
+        <label asp-for="NumberOfParticipants">Ettevõttest tulevate osavõtjate arv</label>
         <input asp-for="NumberOfParticipants" id="numberOfParticipants" class="form-control" />
     </div>
     <div>
         <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-        <label asp-for="PaymentMethod"></label>
+        <label asp-for="PaymentMethod">Osavõtumaksu maksmise viis</label>
         <select asp-for="PaymentMethod" id="paymentMethod" class="form-control">
-            <option value="BankTransfer">Bank Transfer</option>
-            <option value="Cash">Cash</option>
+            <option value="BankTransfer">Pangaülekanne</option>
+            <option value="Cash">Sularaha</option>
         </select>
     </div>
     <div>
         <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
-        <label asp-for="AdditionalInformation"></label>
+        <label asp-for="AdditionalInformation">Lisainfo</label>
         <textarea asp-for="AdditionalInformation" class="form-control" maxlength="5000"></textarea>
     </div>
-    <button type="submit" id="saveChanges" class="btn btn-primary">Save Changes</button>
+    <button type="submit" id="saveChanges" class="btn btn-primary">Salvesta</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Tagasi</a>
 </form>
-<a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

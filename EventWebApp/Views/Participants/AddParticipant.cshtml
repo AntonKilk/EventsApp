@@ -1,76 +1,76 @@
 ﻿@model AddParticipantViewModel
 
 @{
-    ViewData["Title"] = "Add Participant";
+    ViewData["Title"] = "Osavõtja lisamine";
 }
 
-<h2>Add Participant to Event</h2>
+<h2>@ViewData["Title"]</h2>
 
 <form asp-action="AddParticipantToEvent" asp-controller="Participants">
     <input type="hidden" name="eventId" value="@Model.EventId" />
 
     <div class="form-group">
-        <label>Participant Type</label>
+        <label>Isik / Üritus</label>
         <select id="participantType" name="participantType" class="form-control">
-            <option value="">-- Select Participant Type --</option>
-            <option value="Person">Person</option>
-            <option value="Company">Company</option>
+            <option value="">-- Vali --</option>
+            <option value="Person">Isik</option>
+            <option value="Company">Üritus</option>
         </select>
     </div>
 
     <div id="personFields" style="display:none;">
         <div class="form-group">
-            <label>First Name</label>
+            <label>Eesnimi</label>
             <input id="firstName" type="text" name="FirstName" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Surname</label>
+            <label>Perekonnanimi</label>
             <input id="lastName" type="text" name="LastName" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Personal Code</label>
+            <label>Isikukood</label>
             <input id="personalCodeInput" type="text" name="PersonalCode" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Method of Paying the Participation Fee</label>
+            <label>Maksmise viis</label>
             <select id="paymentMethod" name="PaymentMethod" class="form-control">
-                <option value="BankTransfer">Bank Transfer</option>
-                <option value="Cash">Cash</option>
+                <option value="BankTransfer">Pangaülekanne</option>
+                <option value="Cash">Sularaha</option>
             </select>
         </div>
         <div class="form-group">
-            <label>Additional Information</label>
+            <label>Lisainfo</label>
             <textarea name="AdditionalInformation" class="form-control" maxlength="1500"></textarea>
         </div>
     </div>
 
     <div id="companyFields" style="display:none;">
         <div class="form-group">
-            <label>Legal Name of the Company</label>
+            <label>Ettevõtte juriidiline nim</label>
             <input id="companyName" type="text" name="Name" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Company Registration Code</label>
+            <label>Ettevõtte registrikood</label>
             <input id="companyRegistrationCode" type="text" name="CompanyRegistrationCode" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Number of Participants from the Company</label>
+            <label>Ettevõttest tulevate osavõtjate arv</label>
             <input id="numberOfParticipants" type="number" name="NumberOfParticipants" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Method of Paying the Participation Fee</label>
+            <label>Maksmise viis</label>
             <select name="PaymentMethod" class="form-control">
-                <option value="BankTransfer">Bank Transfer</option>
-                <option value="Cash">Cash</option>
+                <option value="BankTransfer">Pangaülekanne</option>
+                <option value="Cash">sularaha</option>
             </select>
         </div>
         <div class="form-group">
-            <label>Additional Information</label>
+            <label>Lisainfo</label>
             <textarea name="AdditionalInformation" class="form-control" maxlength="5000"></textarea>
         </div>
     </div>
 
-    <button id="addParticipantBtn" type="submit" class="btn btn-primary">Add Participant</button>
+    <button id="addParticipantBtn" type="submit" class="btn btn-primary">Lisa</button>
 </form>
 
 <script>
