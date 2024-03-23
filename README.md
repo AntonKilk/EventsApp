@@ -19,6 +19,11 @@ App uses Microsoft SQL Server Database.
 
 **I. Clone the repo**
 
+```
+git clone [https://example.com/EventsApp.git](https://github.com/AntonKilk/EventsApp.git)
+cd EventsApp
+```
+
 **II. Migrate the database (in the initial only)**
 
 In Visual Studio Package Manager Console:
