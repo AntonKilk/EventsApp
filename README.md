@@ -19,6 +19,11 @@ App uses Microsoft SQL Server Database.
 
 **I. Clone the repo**
 
+```
+git clone https://github.com/AntonKilk/EventsApp.git
+cd EventsApp
+```
+
 **II. Migrate the database (in the initial only)**
 
 In Visual Studio Package Manager Console:
@@ -35,6 +40,9 @@ dotnet ef database update
 ```
 
 You can view data in the MSSQL Management Studio.
+
+Ensure your appsettings.json file in the EventWebApp project contains the correct SQL Server connection string.
+
 
 **III. Run project**
 
