@@ -20,7 +20,7 @@ App uses Microsoft SQL Server Database.
 **I. Clone the repo**
 
 ```
-git clone [https://example.com/EventsApp.git](https://github.com/AntonKilk/EventsApp.git)
+git clone https://example.com/EventsApp.git
 cd EventsApp
 ```
 
