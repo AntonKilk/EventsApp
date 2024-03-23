@@ -38,7 +38,7 @@ You can view data in the MSSQL Management Studio.
 
 **III. Run project**
 
-In Visual Studio Package Manager Console:
+In Visual Studio:
 
 Run IIS Express or any other server.
 
@@ -72,10 +72,8 @@ Add UI/ CSS styles
 
 ~~controllers logic tests & error handling~~
 
-
-
 Add dictionary Json for translation
 
-Add UI validation for ID…
+~~Add UI validation for ID~~
 
-Add documentation
+~~Add documentation~~
