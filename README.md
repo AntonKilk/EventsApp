@@ -36,6 +36,9 @@ dotnet ef database update
 
 You can view data in the MSSQL Management Studio.
 
+Ensure your appsettings.json file in the EventWebApp project contains the correct SQL Server connection string.
+
+
 **III. Run project**
 
 In Visual Studio:
