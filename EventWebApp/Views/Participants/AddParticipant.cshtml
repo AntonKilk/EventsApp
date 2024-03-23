@@ -21,19 +21,19 @@
     <div id="personFields" style="display:none;">
         <div class="form-group">
             <label>First Name</label>
-            <input type="text" name="FirstName" class="form-control" />
+            <input id="firstName" type="text" name="FirstName" class="form-control" />
         </div>
         <div class="form-group">
             <label>Surname</label>
-            <input type="text" name="LastName" class="form-control" />
+            <input id="lastName" type="text" name="LastName" class="form-control" />
         </div>
         <div class="form-group">
             <label>Personal Code</label>
-            <input type="text" name="PersonalCode" class="form-control" />
+            <input id="personalCodeInput" type="text" name="PersonalCode" class="form-control" />
         </div>
         <div class="form-group">
             <label>Method of Paying the Participation Fee</label>
-            <select name="PaymentMethod" class="form-control">
+            <select id="paymentMethod" name="PaymentMethod" class="form-control">
                 <option value="BankTransfer">Bank Transfer</option>
                 <option value="Cash">Cash</option>
             </select>
@@ -47,15 +47,15 @@
     <div id="companyFields" style="display:none;">
         <div class="form-group">
             <label>Legal Name of the Company</label>
-            <input type="text" name="Name" class="form-control" />
+            <input id="companyName" type="text" name="Name" class="form-control" />
         </div>
         <div class="form-group">
             <label>Company Registration Code</label>
-            <input type="text" name="CompanyRegistrationCode" class="form-control" />
+            <input id="companyRegistrationCode" type="text" name="CompanyRegistrationCode" class="form-control" />
         </div>
         <div class="form-group">
             <label>Number of Participants from the Company</label>
-            <input type="number" name="NumberOfParticipants" class="form-control" />
+            <input id="numberOfParticipants" type="number" name="NumberOfParticipants" class="form-control" />
         </div>
         <div class="form-group">
             <label>Method of Paying the Participation Fee</label>
@@ -81,21 +81,90 @@
     });
 </script>
 
+<!-- Fields validation -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var participantTypeSelect = document.getElementById('participantType');
-        var addParticipantBtn = document.getElementById('addParticipantBtn');
+        const participantTypeSelect = document.getElementById('participantType');
+        const addParticipantBtn = document.getElementById('addParticipantBtn');
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const personalCodeInput = document.getElementById('personalCodeInput');
+        const paymentMethod = document.getElementById('paymentMethod');
+        const companyName = document.getElementById('companyName');
+        const companyRegistrationCode = document.getElementById('companyRegistrationCode');
+        const numberOfParticipants = document.getElementById('numberOfParticipants');
 
-        addParticipantBtn.disabled = true;
+        // Function to check if all required fields are filled and the ID is valid
+        function checkFields() {
+            let fieldsFilled = false;
+            let isValidId = false;
+            if (participantTypeSelect.value === 'Person') {
+                fieldsFilled = firstName.value.trim() && lastName.value.trim() && personalCodeInput.value.trim() && paymentMethod.value;
+                isValidId = isValidEstonianId(personalCodeInput.value);
+            } else if (participantTypeSelect.value === 'Company') {
+                fieldsFilled = companyName.value.trim() && companyRegistrationCode.value.trim() && numberOfParticipants.value.trim() && paymentMethod.value;
+                isValidId = true; 
+            }
+            addParticipantBtn.disabled = !(fieldsFilled && isValidId);
+        }
+
+        // Check fields on input or change
+        [firstName, lastName, personalCodeInput, paymentMethod, companyName, companyRegistrationCode, numberOfParticipants, participantTypeSelect].forEach(element =>
+            element.addEventListener('input', checkFields));
 
         participantTypeSelect.addEventListener('change', function () {
-            // Check if the selected value is either "Person" or "Company"
-            if (this.value === 'Person' || this.value === 'Company') {
-                // If yes, enable the button
-                addParticipantBtn.disabled = false;
+            document.getElementById('personFields').style.display = this.value === 'Person' ? '' : 'none';
+            document.getElementById('companyFields').style.display = this.value === 'Company' ? '' : 'none';
+            checkFields(); // Recheck whenever the participant type changes
+        });
+
+        // Initial check in case of autofill or preset values
+        checkFields();
+    });
+</script>
+
+<!-- Function to validate Estonian ID code -->
+<script>
+function isValidEstonianId(id) {
+    if (!/^\d{11}$/.test(id)) return false;
+
+    // Weight arrays for checksum calculation
+    const firstWeights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+    const secondWeights = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
+
+    // Calculate checksums
+    const calculateChecksum = (weights) =>
+        id
+            .substring(0, 10)
+            .split('')
+            .reduce((sum, current, index) => sum + parseInt(current, 10) * weights[index], 0) % 11;
+
+    let checksum = calculateChecksum(firstWeights);
+
+    // If first checksum calculation equals 10, recalculate using second weight array
+    if (checksum === 10) {
+        checksum = calculateChecksum(secondWeights);
+        // If second calculation also equals 10, checksum is 0
+        checksum = checksum === 10 ? 0 : checksum;
+    }
+
+    // Compare calculated checksum to the last digit of the ID
+    return checksum === parseInt(id[10], 10);
+}
+</script>
+
+<!-- Add red border to ID field if ID is not valid -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var personalCodeInput = document.getElementById('personalCodeInput');
+
+        personalCodeInput.addEventListener('input', function () {
+            var isValid = isValidEstonianId(this.value);
+
+            if (!isValid) {
+                this.style.borderColor = 'red';
             } else {
-                // If no valid option is selected, disable the button
-                addParticipantBtn.disabled = true;
+                this.style.borderColor = ''; 
             }
         });
     });

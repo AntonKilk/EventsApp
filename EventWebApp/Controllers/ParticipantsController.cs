@@ -61,6 +61,12 @@ namespace EventWebApp.Controllers
                         paymentMethod = PaymentMethod.BankTransfer;
                     }
 
+                    if (form["PersonalCode"].ToString().Length != 11)
+                    {
+                        ModelState.AddModelError("PersonalCode", "Personal code must be 11 characters long");
+                        return View("AddParticipant", new AddParticipantViewModel { EventId = eventId });
+                    }
+
                     var personDetails = new Person
                     {
                         FirstName = form["FirstName"],
@@ -191,6 +197,12 @@ namespace EventWebApp.Controllers
                     if (!isPaymentMethodValid)
                     {
                         paymentMethod = PaymentMethod.BankTransfer;
+                    }
+
+                    if (form["PersonalCode"].ToString().Length != 11)
+                    {
+                        ModelState.AddModelError("PersonalCode", "Personal code must be 11 characters long");
+                        return View("AddParticipant", new AddParticipantViewModel { EventId = id });
                     }
 
                     person.FirstName = form["FirstName"];

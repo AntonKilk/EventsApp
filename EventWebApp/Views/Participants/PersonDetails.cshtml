@@ -13,21 +13,21 @@
     <div>
         <span asp-validation-for="FirstName" class="text-danger"></span>
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+        <input asp-for="FirstName" id="firstName" class="form-control" value="@Model.FirstName" />
     </div>
     <div>
         <span asp-validation-for="LastName" class="text-danger"></span>
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+        <input asp-for="LastName" id="lastName" class="form-control" value="@Model.LastName" />
     </div>
     <div>
         <span asp-validation-for="PersonalCode" class="text-danger"></span>
         <label asp-for="PersonalCode"></label>
-        <input asp-for="PersonalCode" class="form-control" value="@Model.PersonalCode" />
+        <input asp-for="PersonalCode" id="personalCodeInput" class="form-control" value="@Model.PersonalCode" />
     <div>
             <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             <label asp-for="PaymentMethod"></label>
-            <select asp-for="PaymentMethod" class="form-control" value="@Model.PaymentMethod">
+            <select asp-for="PaymentMethod" id="paymentMethod" class="form-control" value="@Model.PaymentMethod">
             <option value="BankTransfer">Bank Transfer</option>
             <option value="Cash">Cash</option>
         </select>
@@ -37,6 +37,86 @@
             <label asp-for="AdditionalInformation"></label>
             <textarea asp-for="AdditionalInformation" class="form-control" maxlength="1500" value="@Model.AdditionalInformation">@Model.AdditionalInformation</textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button id="saveChanges" type="submit" class="btn btn-primary">Save Changes</button>
 </form>
 <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back to Events</a>
+
+<!-- Fields validation -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const saveChangesButton = document.getElementById('saveChanges');
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const personalCodeInput = document.getElementById('personalCodeInput');
+        const paymentMethod = document.getElementById('paymentMethod');
+        // Function to check if all required fields are filled and the ID is valid
+        function checkFields() {
+            let fieldsFilled = false;
+            let isValidId = false;
+           
+            fieldsFilled = firstName.value.trim() && lastName.value.trim() && personalCodeInput.value.trim() && paymentMethod.value;
+            isValidId = isValidEstonianId(personalCodeInput.value);
+           
+            saveChanges.disabled = !(fieldsFilled && isValidId);
+        }
+
+        // Check fields on input or change
+        [firstName, lastName, personalCodeInput, paymentMethod].forEach(element =>
+            element.addEventListener('input', checkFields));
+
+        participantTypeSelect.addEventListener('change', function () {
+            document.getElementById('personFields').style.display = this.value === 'Person' ? '' : 'none';
+            checkFields();
+        });
+
+        // Initial check in case of autofill or preset values
+        checkFields();
+    });
+</script>
+
+<!-- Function to validate Estonian ID code -->
+<script>
+    function isValidEstonianId(id) {
+        if (!/^\d{11}$/.test(id)) return false;
+
+        // Weight arrays for checksum calculation
+        const firstWeights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+        const secondWeights = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
+
+        // Calculate checksums
+        const calculateChecksum = (weights) =>
+            id
+                .substring(0, 10)
+                .split('')
+                .reduce((sum, current, index) => sum + parseInt(current, 10) * weights[index], 0) % 11;
+
+        let checksum = calculateChecksum(firstWeights);
+
+        // If first checksum calculation equals 10, recalculate using second weight array
+        if (checksum === 10) {
+            checksum = calculateChecksum(secondWeights);
+            // If second calculation also equals 10, checksum is 0
+            checksum = checksum === 10 ? 0 : checksum;
+        }
+
+        // Compare calculated checksum to the last digit of the ID
+        return checksum === parseInt(id[10], 10);
+    }
+</script>
+
+<!-- Add red border to ID field if ID is not valid -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var personalCodeInput = document.getElementById('personalCodeInput');
+
+        personalCodeInput.addEventListener('input', function () {
+            var isValid = isValidEstonianId(this.value);
+
+            if (!isValid) {
+                this.style.borderColor = 'red';
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    });
+</script>

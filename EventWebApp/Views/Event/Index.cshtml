@@ -2,7 +2,10 @@
 
 @{
     ViewData["Title"] = "Add Event";
+    DateTime twoYearsFromNow = DateTime.Now.AddYears(2);
+    string maxDate = twoYearsFromNow.ToString("yyyy-MM-ddTHH:mm");
 }
+
 
 <h1>@ViewData["Title"]</h1>
 
@@ -13,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="dateAndTime">Date and Time</label>
-        <input type="datetime-local" class="form-control" id="dateAndTime" name="DateAndTime" required min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <input type="datetime-local" class="form-control" id="dateAndTime" name="DateAndTime" required min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" max="@maxDate" />
     </div>
     <div class="form-group">
         <label for="eventPlace">Venue</label>
@@ -23,6 +26,7 @@
         <label for="additionalInformation">Additional Information</label>
         <textarea class="form-control" id="additionalInformation" name="AdditionalInformation" maxlength="1000"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Add Event</button>
+    <button id="submitButton" type="submit" class="btn btn-primary">Add Event</button>
     <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back</a>
 </form>
+

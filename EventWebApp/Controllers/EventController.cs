@@ -25,7 +25,6 @@ namespace EventWebApp.Controllers
             {
                 await _eventService.CreateEventAsync(model);
                 return RedirectToAction("Index", "Home");
-
             }
 
             return View(model);
